@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+ 
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<context:component-scan base-package="net.controller" />
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<bean id="fileProcessor" class="net.controller.FileProcessor">
+		<property name="fileWorkingDirectory" value="C:\\crunchify" />
+		<property name="fileWriters">
+			<list>
+				<bean class="net.file.RegexpFileWriter">
+					<constructor-arg type="java.lang.String"
+						value="C:\\crunchify\\Result\\output1.txt" />
+					<constructor-arg type="java.lang.String" value="^[a-dA-D].*" />
+				</bean>
+				<bean class="net.file.RegexpFileWriter">
+					<constructor-arg type="java.lang.String"
+						value="C:\\crunchify\\Result\\output2.txt" />
+					<constructor-arg type="java.lang.String" value="^[e-zE-Z].*" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>
